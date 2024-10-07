@@ -1,0 +1,117 @@
+.home-container {
+    padding: 20px;
+    font-family: Arial, sans-serif;
+    background-color: black;
+    /* Black background */
+    color: white;
+    /* White text color */
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+
+header {
+    background-color: #f1665e;
+    /* Orange background */
+    color: white;
+    padding: 20px;
+    text-align: center;
+    border-radius: 8px;
+}
+
+header h1 {
+    margin: 0;
+    font-size: 2.5rem;
+}
+
+.user-welcome {
+    margin-top: 10px;
+    font-size: 1.2rem;
+}
+
+.content-section {
+    margin-top: 30px;
+    flex-grow: 1;
+}
+
+.project-description {
+    margin-bottom: 30px;
+    background-color: #333333;
+    /* Dark grey background */
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+.project-description h2 {
+    margin-top: 0;
+    font-size: 2rem;
+    color: #f1665e;
+    /* Orange heading color */
+}
+
+.navigation-section {
+    margin-bottom: 30px;
+}
+
+.navigation-section h3 {
+    font-size: 1.8rem;
+    color: #f1665e;
+    /* Orange heading color */
+    margin-bottom: 20px;
+}
+
+.navigation-links {
+    display: flex;
+    justify-content: flex-start;
+    /* Aligns items to the left */
+    gap: 15px;
+    /* Space between buttons */
+    flex-wrap: wrap;
+    /* Allows the buttons to wrap if the screen is too small */
+    padding-left: 0;
+    /* Remove any left padding */
+}
+
+.navigation-links li {
+    list-style: none;
+    margin: 0;
+    /* Ensure no margin on list items */
+}
+
+.navigation-links a {
+    background-color: #f1665e;
+    /* Orange button background */
+    color: white;
+    border: none;
+    padding: 15px 20px;
+    font-size: 1.2rem;
+    border-radius: 8px;
+    text-align: center;
+    text-decoration: none;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+    display: block;
+    /* Ensure the links take up the full space of their container */
+    width: 100%;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+    /* Add shadow to make the buttons stand out */
+}
+
+.navigation-links a:hover {
+    background-color: #e64a19;
+    /* Darker orange on hover */
+}
+
+footer {
+    margin-top: 30px;
+    text-align: center;
+    font-size: 1rem;
+    color: #ffffff;
+    /* White text color */
+    padding: 10px 0;
+    background-color: #f1665e;
+    /* Orange background */
+    border-radius: 8px;
+}
