@@ -20,6 +20,10 @@ app.use(cors({
 app.use("/promo",Promotion)
 app.use("/review",ReviewRoute)
 
+// Routes
+app.use("/users", userRoutes);
+
+
 // Session configuration
 app.use(session({
     secret: 'sliit',
@@ -82,8 +86,6 @@ app.get("/api/auth/check-session", (req, res) => {
 });
 
 
-// Routes
-app.use("/users", userRoutes);
 
 
 mongoose.connect("mongodb+srv://jaya:employee@employee.7h8nmby.mongodb.net/?retryWrites=true&w=majority&appName=employee")

@@ -1,77 +1,113 @@
-/* Container for the entire component */
+
+
 .user-details-container {
-    padding: 20px;
-    background-color: #f9f9f9;
+  padding: 20px;
+}
+
+.search-container {
+  margin-bottom: 20px;
+}
+
+.table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+th, td {
+  padding: 10px;
+  border: 1px solid #ddd;
+  text-align: left;
+}
+
+th{
+  background-color: #4595ea;
+}
+
+
+.action-button {
+  padding: 10px 15px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: 16px;
+}
+
+
+.action-button.update {
+  background-color: #007bff; 
+  color: white;
+  margin-left: 10px;
+}
+
+.action-button.update:hover {
+  background-color: #0056b3; 
+}
+
+
+.action-button.delete {
+  background-color: #dc3545; 
+  color: white;
+}
+
+.action-button.delete:hover {
+  background-color: #c82333; 
+}
+
+
+.download-button {
+  padding: 10px 15px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: 16px;
+  background-color: #007bff; 
+  color: white;
+}
+
+.download-button:hover {
+  background-color: #0056b3; 
+}
+
+
+
+@media print {
+  .action-button {
+    display: none; 
   }
-  
-  /* Styling for the search input and button */
-  .search-container {
+
+  .download-button {
+    display: none; 
+  }
+
+  th:nth-child(10), 
+  td:nth-child(10) { 
+    display: none; 
+  }
+  .print-header {
+    display: block;
+    text-align: center;
     margin-bottom: 20px;
   }
-  
-  .search-container input {
-    padding: 8px;
-    font-size: 16px;
-    border: 1px solid #ccc;
-    border-radius: 4px;
-    margin-right: 10px;
-  }
-  
-  .search-container button {
-    padding: 8px 16px;
-    background-color: #4CAF50;
-    color: white;
-    border: none;
-    border-radius: 4px;
-    cursor: pointer;
-  }
-  
-  .search-container button:hover {
-    background-color: #45a049;
-  }
-  
-  /* Styling for the user details list */
-  .user-list {
-    margin-top: 20px;
-  }
-  
-  .user-list div {
-    margin-bottom: 10px;
-    padding: 15px;
-    border: 1px solid #ddd;
-    border-radius: 8px;
-    background-color: #fff;
-  }
-  
-  /* Styling for the buttons */
-  .download-button {
-    padding: 10px 20px;
-    background-color: #007bff;
-    color: white;
-    border: none;
-    border-radius: 4px;
-    cursor: pointer;
-  }
-  
-  .download-button:hover {
-    background-color: #0056b3;
+
+  .print-header h1 {
+    font-size: 24px;
+    margin: 0;
   }
 
-  .whatsapp-button{
-    padding: 10px 20px;
-    background-color: #007bff;
-    color: white;
-    border: none;
-    border-radius: 4px;
-    cursor: pointer;
+  .print-header .report-date {
+    font-size: 14px;
+    margin-top: 5px;
+    color: #555;
   }
 
-  .whatsapp-button:hover{
-    background-color: #0056b3;
-  }
   
-  .no-results {
-    color: #ff0000;
-    font-weight: bold;
+  .print-footer {
+    display: block;
+    text-align: center;
+    font-size: 12px;
+    margin-top: 30px;
+    border-top: 1px solid #ddd;
+    padding-top: 10px;
+    color: #555;
   }
-  
+}

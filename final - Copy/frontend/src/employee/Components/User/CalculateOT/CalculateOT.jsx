@@ -15,7 +15,7 @@ const OvertimeCalculator = () => {
     // Fetch employees with role "employee"
     const fetchEmployees = async () => {
       try {
-        const response = await axios.get("http://localhost:3001/users");
+        const response = await axios.get("http://localhost:5000/users");
         const employeesList = response.data.users.filter(user => user.role === 'employee');
         setEmployees(employeesList);
       } catch (error) {
@@ -62,7 +62,7 @@ const OvertimeCalculator = () => {
 
     try {
         // Send PUT request to update employee's total salary with overtime
-        const response = await axios.put(`http://localhost:3001/users/${selectedEmployee._id}`, {
+        const response = await axios.put(`http://localhost:5000/users/${selectedEmployee._id}`, {
             total_salary_with_OT: totalSalaryWithOT, // Include total_salary_with_OT in the request
             
         });

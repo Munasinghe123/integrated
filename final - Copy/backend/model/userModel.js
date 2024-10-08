@@ -17,7 +17,7 @@ const userSchema = new Schema ({
     },
     
     contactNumber:{
-        type:Number,
+        type:String,
         required:true
     },
     address:{
