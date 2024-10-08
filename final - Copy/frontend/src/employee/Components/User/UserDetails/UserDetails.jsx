@@ -1,166 +1,10 @@
-// import React, { useEffect, useState, useRef } from "react";
-// import axios from "axios";
-// import DisplayUser from "../DisplayUser/DisplayUser";
-// import { useReactToPrint } from "react-to-print";
-// import './UserDetails.css'; 
-
-// const URL = "http://localhost:3001/users";
-
-// const fetchHandler = async () => {
-//   return await axios.get(URL).then((res) => res.data);
-// };
-
-// export default function UserDetails() {
-//   const [users, setUsers] = useState([]);
-//   const [filteredUsers, setFilteredUsers] = useState([]);
-//   const [searchQuery, setSearchQuery] = useState("");
-//   const [noResults, setNoResults] = useState(false);
-//   const componentsRef = useRef();
-
-//   useEffect(() => {
-//     fetchHandler().then((data) => {
-//       const usersList = data.users || data;
-//       setUsers(usersList);
-//       setFilteredUsers(usersList);
-//     });
-//   }, []);
-
-//   // Update the filtered users as the search query changes
-//   useEffect(() => {
-//     const filtered = users.filter((user) =>
-//       Object.values(user).some((field) =>
-//         field.toString().toLowerCase().includes(searchQuery.toLowerCase())
-//       )
-//     );
-
-//     setFilteredUsers(filtered);
-//     setNoResults(filtered.length === 0);
-//   }, [searchQuery, users]);
-
-//   //report generation
-//   const handlePrint = useReactToPrint({
-//     content: () => componentsRef.current,
-//     documentTitle: "Users Report",
-//     onAfterPrint: () => alert("Users report successfully downloaded"),
-//   });
-
-//   return (
-//     <div className="user-details-container">
-//       <div className="search-container">
-//         <input
-//           onChange={(e) => setSearchQuery(e.target.value)}
-//           type="text"
-//           name="search"
-//           placeholder="Search users"
-//           value={searchQuery}
-//         />
-       
-//       </div>
-
-//       {noResults ? (
-//         <div className="no-results">
-//           <p>No users found</p>
-//         </div>
-//       ) : (
-//         <div className="user-list" ref={componentsRef}>
-//           {filteredUsers.map((user) => (
-//             <div key={user._id}>
-//               <DisplayUser user={user} />
-//             </div>
-//           ))}
-//         </div>
-//       )}
-
-//       <button className="download-button" onClick={handlePrint}>Download Report</button>
-//     </div>
-//   );
-// }
-
-// import React, { useEffect, useState, useRef } from "react";
-// import axios from "axios";
-// import DisplayUser from "../DisplayUser/DisplayUser";
-// import { useReactToPrint } from "react-to-print";
-// import './UserDetails.css'; 
-
-// const URL = "http://localhost:3001/users";
-
-// const fetchHandler = async () => {
-//   return await axios.get(URL).then((res) => res.data);
-// };
-
-// export default function UserDetails() {
-//   const [users, setUsers] = useState([]);
-//   const [filteredUsers, setFilteredUsers] = useState([]);
-//   const [searchQuery, setSearchQuery] = useState("");
-//   const [noResults, setNoResults] = useState(false);
-//   const componentsRef = useRef();
-
-//   useEffect(() => {
-//     fetchHandler().then((data) => {
-//       const usersList = data.users || data;
-//       setUsers(usersList);
-//       setFilteredUsers(usersList);
-//     });
-//   }, []);
-
-//   // Update the filtered users as the search query changes
-//   useEffect(() => {
-//     const filtered = users.filter((user) =>
-//       user.name.toLowerCase().includes(searchQuery.toLowerCase()) // Filter by name only
-//     );
-
-//     setFilteredUsers(filtered);
-//     setNoResults(filtered.length === 0);
-//   }, [searchQuery, users]);
-
-//   // Report generation
-//   const handlePrint = useReactToPrint({
-//     content: () => componentsRef.current,
-//     documentTitle: "Users Report",
-//     onAfterPrint: () => alert("Users report successfully downloaded"),
-//   });
-
- 
-//   return (
-//     <div className="user-details-container">
-//       <div className="search-container">
-
-//         {/* search bar */}
-//         <input
-//           onChange={(e) => setSearchQuery(e.target.value)}
-//           type="text"
-//           name="search"
-//           placeholder="Search employees by name"
-//           value={searchQuery}
-//         />
-//       </div>
-
-//       {noResults ? (
-//         <div className="no-results">
-//           <p>No employees found</p>
-//         </div>
-//       ) : (
-//         <div className="user-list" ref={componentsRef}>
-//           {filteredUsers.map((user) => (
-//             <div key={user._id}>
-//               <DisplayUser user={user} />
-//             </div>
-//           ))}
-//         </div>
-//       )}
-
-//       <button className="download-button" onClick={handlePrint}>Download Report</button>
-//     </div>
-//   );
-// }
-
 import React, { useEffect, useState, useRef } from "react";
 import axios from "axios";
-import DisplayUser from "../DisplayUser/DisplayUser";
 import { useReactToPrint } from "react-to-print";
-import './UserDetails.css'; 
+import { Link } from "react-router-dom";
+import './UserDetails.css';
 
-const URL = "http://localhost:3001/users";
+const URL = "http://localhost:5000/users";
 
 const fetchHandler = async () => {
   return await axios.get(URL).then((res) => res.data);
@@ -181,11 +25,22 @@ export default function UserDetails() {
     });
   }, []);
 
-  // Update the filtered users as the search query changes
+  const deleteHandler = async (userId) => {
+    try {
+      await axios.delete(`http://localhost:5000/users/${userId}`);
+      const updatedUsers = users.filter(user => user._id !== userId);
+      setUsers(updatedUsers);
+      setFilteredUsers(updatedUsers);
+    } catch (error) {
+      console.error("Error deleting user:", error);
+    }
+  };
+
+  // Update the filtered users in search
   useEffect(() => {
     const filtered = users.filter((user) =>
-      user.name.toLowerCase().includes(searchQuery.toLowerCase()) // Filter by name only
-    );
+      user.name.toLowerCase().includes(searchQuery.toLowerCase())
+    ).filter((user) => user.role !== "admin");
 
     setFilteredUsers(filtered);
     setNoResults(filtered.length === 0);
@@ -195,38 +50,11 @@ export default function UserDetails() {
   const handlePrint = useReactToPrint({
     content: () => componentsRef.current,
     documentTitle: "Users Report",
-    onAfterPrint: () => alert("Users report successfully downloaded"),
   });
-
-  // WhatsApp Message functionality
-  const sendWhatsAppMessage = () => {
-    const phoneNumber = "+94726221723"; //  number
-
-    // Format the user data as a readable string
-    const formattedData = filteredUsers.map(user => (
-      `Name: ${user.name}\n` +
-      `Username: ${user.username}\n` +
-      `Password: ${user.password}\n` +
-      `Contact Number: ${user.contactNumber}\n` +
-      `Address: ${user.address}\n` +
-      `Role: ${user.role}\n` +
-      `Email: ${user.email}\n` +
-      `Salary: ${user.salary}\n\n`
-    )).join(""); // Join all users' data into one string
-
-    const message = `User Report:\n\n${formattedData}`;
-
-    // WhatsApp API URL with the formatted message
-    const whatsAppUrl = `https://web.whatsapp.com/send?phone=${phoneNumber}&text=${encodeURIComponent(message)}`;
-
-    // Open WhatsApp in a new window
-    window.open(whatsAppUrl, "_blank");
-  };
 
   return (
     <div className="user-details-container">
       <div className="search-container">
-
         {/* Search bar */}
         <input
           onChange={(e) => setSearchQuery(e.target.value)}
@@ -243,18 +71,56 @@ export default function UserDetails() {
         </div>
       ) : (
         <div className="user-list" ref={componentsRef}>
-          {filteredUsers.map((user) => (
-            <div key={user._id}>
-              <DisplayUser user={user} />
-            </div>
-          ))}
+          <div className="print-header">
+            <h1>Employee Report</h1>
+            <p className="report-date">{new Date().toLocaleDateString()}</p>
+          </div>
+          <table>
+            <thead>
+              <tr>
+                <th>Id</th>
+                <th>Name</th>
+                <th>Username</th>
+                <th>Email</th>
+                <th>Contact Number</th>
+                <th>Address</th>
+                <th>Role</th>
+                <th>Salary</th>
+                <th>Total Salary with OT</th>
+                <th>Actions</th>
+              </tr>
+            </thead>
+            <tbody>
+              {filteredUsers.map((user) => (
+                <tr key={user._id}>
+                  <td>{user._id}</td>
+                  <td>{user.name}</td>
+                  <td>{user.userName}</td>
+                  <td>{user.email}</td>
+                  <td>{user.contactNumber}</td>
+                  <td>{user.address}</td>
+                  <td>{user.role}</td>
+                  <td>${user.salary}</td>
+                  <td>${user.total_salary_with_OT}</td>
+                  <td>
+                    <button className="action-button delete" onClick={() => deleteHandler(user._id)}>Delete</button>
+                    <Link to={`/UpdateUser/${user._id}`}>
+                      <button className="action-button update">Update</button>
+                    </Link>
+                  </td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+
+          <div className="print-footer">
+            <p>Generated by Employee Management System</p>
+            <p>For more details, contact JayagamaStores.com</p>
+          </div>
         </div>
       )}
 
-      {/* Buttons */}
       <button className="download-button" onClick={handlePrint}>Download Report</button>
-      <br /><br />
-      <button className="whatsapp-button" onClick={sendWhatsAppMessage}>Send Report via WhatsApp</button>
     </div>
   );
 }

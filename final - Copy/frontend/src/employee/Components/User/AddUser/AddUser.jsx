@@ -21,12 +21,12 @@ export default function AddUser() {
   const handleChange = (e) => {
     const { name, value } = e.target;
 
-    // Validation based on the field
+    
     switch (name) {
       case "name":
       case "userName":
       case "role":
-        // Allow only letters
+        
         if (/^[A-Za-z\s]*$/.test(value) || value === "") {
           setInputs((prevState) => ({
             ...prevState,
@@ -36,7 +36,7 @@ export default function AddUser() {
         break;
 
       case "contactNumber":
-        // Allow only numbers and check length
+        
         if (/^[0-9]*$/.test(value) && (value.length <= 10)) {
           setInputs((prevState) => ({
             ...prevState,
@@ -46,7 +46,7 @@ export default function AddUser() {
         break;
 
       case "salary":
-        // Allow only numbers
+        
         if (/^[0-9]*$/.test(value) || value === "") {
           setInputs((prevState) => ({
             ...prevState,
@@ -74,13 +74,13 @@ export default function AddUser() {
   const handleSubmit = (e) => {
     e.preventDefault();
 
-    // Validate email format before proceeding
+    
     if (!/^[\w-]+(\.[\w-]+)*@([\w-]+\.)+[a-zA-Z]{2,7}$/.test(inputs.email)) {
       alert("Please enter a valid email address.");
       return;
     }
 
-    // Validate contact number length
+    
     if (inputs.contactNumber.length !== 10) {
       alert("Contact number must be exactly 10 digits.");
       return;
@@ -93,19 +93,21 @@ export default function AddUser() {
   const sendRequest = async () => {
 
     try{
-      await axios.post("http://localhost:3001/users/adduser", {
+      await axios.post("http://localhost:5000/users/adduser", {
         name: String(inputs.name),
         userName: String(inputs.userName),
         password: String(inputs.password),
-        contactNumber: Number(inputs.contactNumber),
+        contactNumber: String(inputs.contactNumber),
         address: String(inputs.address),
         role: String(inputs.role),
         email: String(inputs.email),
         salary: Number(inputs.salary),
+
+        
        
       });
     }catch (error) {
-      // Check if the error has a response and display the message accordingly
+      
       if (error.response && error.response.data) {
           alert(error.response.data.message);
       } else {
@@ -165,13 +167,16 @@ export default function AddUser() {
         />
         
         <label>Role</label>
-        <input
-          type="text"
-          name="role"
-          onChange={handleChange}
-          value={inputs.role}
-          required
-        />
+          <select
+              name="role"
+              onChange={handleChange}
+              value={inputs.role}
+              required
+          >
+            <option value="" disabled>Select a role</option>
+            <option value="employee">Employee</option>
+          </select>
+
         
         <label>Email</label>
         <input
@@ -190,6 +195,8 @@ export default function AddUser() {
           value={inputs.salary}
           required
         />
+
+   
         
         <button type="submit">Submit</button>
       </form>

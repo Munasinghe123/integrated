@@ -21,7 +21,18 @@ import OvertimeCalculator from "./employee/Components/User/CalculateOT/Calculate
 import ContactAdmin from "./employee/Components/User/ContactAdmin/ContactAdmin";
 
 function App() {
-  const { user, logout } = useContext(AuthContext);
+  const { user, logout,loading } = useContext(AuthContext); //added loading
+
+  //added loading
+  if (loading) {
+    
+    return (
+      <div className="spinner-container">
+        <div className="spinner"></div>
+        <div className="loading-message">Please Wait...</div>
+      </div>
+    );
+  }
 
   return (
     <div>
