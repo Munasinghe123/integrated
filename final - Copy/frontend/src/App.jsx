@@ -101,6 +101,7 @@ function App() {
                       </>
                     }
                   />
+                   <Route path="/adminPromo" element={ <><Navbar handleLogout={logout} /><AdminPromotion/></>} />
                 </>
               ) : (
                 // Routes for employee users

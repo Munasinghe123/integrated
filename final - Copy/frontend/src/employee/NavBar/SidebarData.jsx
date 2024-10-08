@@ -35,6 +35,14 @@ export const SidebarData = () => {
         icon: <FaIcons.FaCommentDollar />,
         cName: "nav-text",
       },
+
+      {
+        title: "Admin promo",
+        path: "/adminPromo",
+        icon: <FaIcons.FaCommentDollar />,
+        cName: "nav-text",
+      },
+
       {
         title: "Logout",
         path: "/logout",
